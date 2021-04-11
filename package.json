@@ -30,6 +30,7 @@
     "start:dev": "NODE_ENV=development webpack --watch",
     "start:sample": "NODE_ENV=development webpack --config sample/webpack.plugin.js --watch",
     "prepublishOnly": "yarn build",
+    "prepare": "yarn build",
     "lint": "tslint \"{src,client,typings,specs}/**/*.ts\" --fix --format codeFrame",
     "format": "prettier --write \"{src,client,typings,specs}/**/*.ts\"",
     "lint:files": "tslint --fix --format codeFrame",
