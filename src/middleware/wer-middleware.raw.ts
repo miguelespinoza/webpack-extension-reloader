@@ -5,6 +5,13 @@
 /*  This will be converted into a lodash templ., any  */
 /*  external argument must be provided using it       */
 /* -------------------------------------------------- */
+let windowClone;
+try {
+  windowClone = window;
+} catch (e) {
+  console.log('window is unavailable', e);
+}
+
 (function(window) {
 
   const injectionContext = {browser: null};
@@ -128,11 +135,18 @@
     });
   }
 
+  let backgroundPage;
+  try {
+    backgroundPage = extension.getBackgroundPage()
+  } catch (e) {
+    console.log('failed to get extension.getBackgroundPage()');
+  }
+
   // ======================= Bootstraps the middleware =========================== //
   runtime.reload
-    ? extension.getBackgroundPage() === window ? backgroundWorker(new WebSocket(wsHost)) : extensionPageWorker()
+    ? backgroundPage === window ? backgroundWorker(new WebSocket(wsHost)) : extensionPageWorker()
     : contentScriptWorker();
-})(window);
+})(windowClone);
 
 /* ----------------------------------------------- */
 /* End of Webpack Hot Extension Middleware  */
